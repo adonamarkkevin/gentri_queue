@@ -1,0 +1,22 @@
+@BASEURL = http://localhost:9000
+
+### Register User
+POST {{BASEURL}}/api/v1/user/register
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "TESTUSER",
+    "email": "testuser@email.com",
+    "password": "password123",
+    "firstName": "ANYA",
+    "middleName": "",
+    "lastName": "FORGER",
+    "birthdate": "07/09/2002",
+    "address": "128 Park Avenue, West Berlint",
+    "brgy": "brgy One",
+    "municipality": "General Trias",
+    "province": "Cavite",
+    "department": "department"
+}
+
