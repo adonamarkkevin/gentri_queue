@@ -34,6 +34,7 @@ createConnection()
                 "/api/v1/user/register",
                 "/api/v1/user/login",
                 "/api/v1/queue/create",
+                "/api/v1/queue/get-all-pending",
             ];
 
             if (jwt_except.indexOf(route.path) > -1) {

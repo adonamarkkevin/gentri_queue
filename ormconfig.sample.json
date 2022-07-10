@@ -1,0 +1,19 @@
+{
+    "type": "mysql",
+    "host": "8.210.222.6",
+    "port": 3306,
+    "username": "admin",
+    "password": "@Kolang123",
+    "database": "gentri_queue_db",
+    "synchronize": true,
+    "logging": true,
+    "entities": ["dist/entity/*.js"],
+    "seeds": ["dist/seeds/*.js"],
+    "migrations": ["dist/migration/*.js"],
+    "subscribers": ["dist/migration/*.js"],
+    "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/migration",
+        "subscribersDir": "src/subscriber"
+    }
+}

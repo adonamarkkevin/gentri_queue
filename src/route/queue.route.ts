@@ -1,4 +1,10 @@
-import { createQueue, updateQueue } from "../controller/queue.controller";
+import {
+    clearQueue,
+    createQueue,
+    getAllPendingQueue,
+    getAllQueueByDepartment,
+    updateQueue,
+} from "../controller/queue.controller";
 
 export const queueRoutes: {
     path: string;
@@ -15,5 +21,23 @@ export const queueRoutes: {
         path: "/api/v1/queue/update/:queue_number",
         method: "put",
         action: updateQueue,
+    },
+
+    {
+        path: "/api/v1/queue/get-all-pending",
+        method: "get",
+        action: getAllPendingQueue,
+    },
+
+    {
+        path: "/api/v1/queue/get-all",
+        method: "get",
+        action: getAllQueueByDepartment,
+    },
+
+    {
+        path: "/api/v1/queue/clear",
+        method: "delete",
+        action: clearQueue,
     },
 ];

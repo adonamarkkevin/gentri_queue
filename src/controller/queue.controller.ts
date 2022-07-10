@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
+import { getRepository, Not } from "typeorm";
 import { Queue } from "../entity/Queue.entity";
 import { User } from "../entity/User.entity";
 import { Visit } from "../entity/Visit.entity";
@@ -89,10 +89,53 @@ export const updateQueue = async (req: Request, res: Response) => {
     }
 };
 
-export const getAllQueue = async (req: Request, res: Response) => {
+export const getAllPendingQueue = async (req: Request, res: Response) => {
     const queueRepo = getRepository(Queue);
+
+    try {
+        let allPendingQueue = await queueRepo.find({
+            where: { status: "on queue" },
+        });
+        return res.send(allPendingQueue);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(`Server error: ${error}`);
+    }
 };
 
-// export const Queue = async (req: Request, res: Response) => {
+export const getAllQueueByDepartment = async (req: Request, res: Response) => {
+    const queueRepo = getRepository(Queue);
+    const userRepo = getRepository(User);
+    const currentUser = req.user;
 
-// }
+    try {
+        let userFound = await userRepo.findOne({
+            where: { id: currentUser.id },
+        });
+
+        let allQueue = await queueRepo.find({
+            where: {
+                status: Not("done" || "cancelled"),
+                department: userFound.department,
+            },
+        });
+
+        return res.send(allQueue);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(`Server error: ${error}`);
+    }
+};
+
+export const clearQueue = async (req: Request, res: Response) => {
+    const queueRepo = getRepository(Queue);
+
+    try {
+        await queueRepo.clear();
+
+        return res.send(`Cleared Queue`);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(`Server error: ${error}`);
+    }
+};

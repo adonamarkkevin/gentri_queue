@@ -76,5 +76,16 @@ Authorization: Bearer {{TOKEN}}
 
 {
     "department": "department",
-    "status": "now serving"
+    "status": "on queue"
 }
+
+### Get All Pending Queue
+GET {{BASEURL}}/api/v1/queue/get-all-pending
+Content-Type: application/json
+Accept: application/json
+
+### Get All Queue By Department
+GET {{BASEURL}}/api/v1/queue/get-all
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{TOKEN}}
