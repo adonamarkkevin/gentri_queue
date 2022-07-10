@@ -2,6 +2,7 @@ const cors = require("cors");
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import express, { Request, Response } from "express";
+import { jwt_checking } from "./middleware/auth";
 
 declare module "express" {
     export interface Request {
@@ -29,7 +30,7 @@ createConnection()
         const { AppRoutes } = await import("./routes");
 
         for (const route of AppRoutes) {
-            let jwt_except = ["/api/v1/user/register"];
+            let jwt_except = ["/api/v1/user/register", "/api/v1/user/login"];
 
             if (jwt_except.indexOf(route.path) > -1) {
                 app[route.method](route.path, (req: Request, res: Response) => {
@@ -39,7 +40,7 @@ createConnection()
 
             app[route.method](
                 route.path,
-                // [jwt_checking],
+                [jwt_checking],
                 // [admin_check]
                 (req: Request, res: Response) => {
                     route.action(req, res);

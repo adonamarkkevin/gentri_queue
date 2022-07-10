@@ -117,12 +117,62 @@ export const loginUser = async (req: Request, res: Response) => {
 
 export const getAllUser = async (req: Request, res: Response) => {
     const userRepo = getRepository(User);
+    const currentUser = req.user;
+    try {
+        let userFound = await userRepo.findOne({
+            where: { id: currentUser.id },
+        });
+
+        if (!userFound) {
+            return res
+                .status(403)
+                .send(`Forbidden request: unauthorized access`);
+        }
+
+        let allUser = await userRepo.find({
+            where: { department: userFound.department },
+        });
+
+        return res.send(allUser);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(`Server error: ${error}`);
+    }
 };
 
-export const getUser = async (req: Request, res: Response) => {
+export const getCurrentUser = async (req: Request, res: Response) => {
     const userRepo = getRepository(User);
+    const currentUser = req.user;
+    try {
+        let userFound = await userRepo.findOne({
+            where: { id: currentUser.id },
+        });
+
+        return res.send(userFound);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(`Server error: ${error}`);
+    }
 };
 
 export const deleteUser = async (req: Request, res: Response) => {
     const userRepo = getRepository(User);
+    const { userId } = req.params;
+
+    try {
+        let userFound = await userRepo.findOne({
+            where: { id: userId },
+        });
+
+        if (!userFound) {
+            return res.status(404).send(`invalid request: no user found`);
+        }
+
+        await userRepo.softRemove(userFound);
+
+        return res.send(`user has been removed`);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(`Server error: ${error}`);
+    }
 };
