@@ -15,15 +15,21 @@ export class Queue extends BaseEntity {
     id: number;
 
     @Column()
-    department: string;
+    queue_number: string;
 
     @Column()
+    department: string;
+
+    @Column({ default: "on queue" })
     status: string;
 
-    @ManyToOne(() => Visit, (visit) => visit.queue)
+    @Column({ nullable: true })
+    served_by: string;
+
+    @Column()
+    visit_purpose: string;
+
+    @ManyToOne(() => Visit, (visit) => visit.queue, { cascade: true })
     @JoinColumn()
     visitor: Visit;
-
-    @ManyToOne(() => User)
-    served_by: User;
 }

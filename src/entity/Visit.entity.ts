@@ -7,6 +7,8 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     OneToMany,
+    AfterInsert,
+    AfterLoad,
 } from "typeorm";
 import { Queue } from "./Queue.entity";
 
@@ -18,14 +20,23 @@ export class Visit extends BaseEntity {
     @Column()
     firstName: string;
 
-    @Column()
+    @Column({ nullable: true })
     middleName: string;
 
     @Column()
     lastName: string;
 
+    @Column({ nullable: true })
+    fullName: string;
+
     @Column()
     birthdate: string;
+
+    @Column({ nullable: true })
+    email: string;
+
+    @Column()
+    contact_number: string;
 
     @Column()
     address: string;
@@ -39,12 +50,6 @@ export class Visit extends BaseEntity {
     @Column()
     province: string;
 
-    @Column()
-    department: string;
-
-    @Column()
-    visit_purpose: string;
-
     @CreateDateColumn()
     createAt: Date;
 
@@ -56,4 +61,10 @@ export class Visit extends BaseEntity {
 
     @OneToMany(() => Queue, (queue) => queue.visitor)
     queue: Queue[];
+
+    @AfterInsert()
+    @AfterLoad()
+    setFullname() {
+        this.fullName = this.firstName + " " + this.lastName;
+    }
 }

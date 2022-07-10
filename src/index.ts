@@ -30,7 +30,11 @@ createConnection()
         const { AppRoutes } = await import("./routes");
 
         for (const route of AppRoutes) {
-            let jwt_except = ["/api/v1/user/register", "/api/v1/user/login"];
+            let jwt_except = [
+                "/api/v1/user/register",
+                "/api/v1/user/login",
+                "/api/v1/queue/create",
+            ];
 
             if (jwt_except.indexOf(route.path) > -1) {
                 app[route.method](route.path, (req: Request, res: Response) => {

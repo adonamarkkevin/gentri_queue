@@ -6,9 +6,9 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     DeleteDateColumn,
-    OneToMany,
+    AfterInsert,
+    AfterLoad,
 } from "typeorm";
-import { Queue } from "./Queue.entity";
 
 @Entity({ name: "TBL_USERS" })
 export class User extends BaseEntity {
@@ -27,11 +27,14 @@ export class User extends BaseEntity {
     @Column()
     firstName: string;
 
-    @Column()
+    @Column({ nullable: true })
     middleName: string;
 
     @Column()
     lastName: string;
+
+    @Column()
+    fullName: string;
 
     @Column()
     birthdate: string;
@@ -60,6 +63,9 @@ export class User extends BaseEntity {
     @DeleteDateColumn()
     deleteAt: Date;
 
-    @OneToMany(() => Queue, (queue) => queue.served_by)
-    queue: Queue[];
+    @AfterInsert()
+    @AfterLoad()
+    setFullname() {
+        this.fullName = this.firstName + " " + this.lastName;
+    }
 }

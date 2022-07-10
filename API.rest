@@ -46,3 +46,35 @@ DELETE {{BASEURL}}/api/v1/user/delete/:userId
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{TOKEN}}
+
+### Create Queue
+POST {{BASEURL}}/api/v1/queue/create
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "testuser@email.com",
+    "password": "password123",
+    "firstName": "ANYA",
+    "middleName": "",
+    "contact_number": "09101234567",
+    "lastName": "FORGER",
+    "birthdate": "07/09/2002",
+    "address": "128 Park Avenue, West Berlint",
+    "brgy": "brgy One",
+    "municipality": "General Trias",
+    "province": "Cavite",
+    "department": "department",
+    "visit_purpose": "test visit"
+}
+
+### Update Queue
+PUT {{BASEURL}}/api/v1/queue/update/001
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "department": "department",
+    "status": "now serving"
+}
