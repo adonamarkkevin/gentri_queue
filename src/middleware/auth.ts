@@ -33,3 +33,13 @@ export const jwt_checking = (
 
     return next();
 };
+
+export const generateToken = (data: any) => {
+    if (!data) return undefined;
+
+    const payload = {
+        id: data.id,
+    };
+
+    return jwt.sign(payload, config.ACCESS_TOKEN_SECRET);
+};

@@ -20,3 +20,12 @@ Accept: application/json
     "department": "department"
 }
 
+### Login User
+POST {{BASEURL}}/api/v1/user/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "userAccess": "TESTUSER",
+    "password": "password123"
+}

@@ -1,7 +1,9 @@
-import { hash } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { User } from "../entity/User.entity";
+import * as EmailValidator from "email-validator";
+import { generateToken } from "../middleware/auth";
 
 export const registUser = async (req: Request, res: Response) => {
     const userRepo = getRepository(User);
@@ -56,6 +58,61 @@ export const registUser = async (req: Request, res: Response) => {
 
 export const loginUser = async (req: Request, res: Response) => {
     const userRepo = getRepository(User);
+    const { userAccess, password } = req.body;
+    try {
+        if (EmailValidator.validate(userAccess)) {
+            let userFound = await userRepo
+                .createQueryBuilder("user")
+                .addSelect("user.password")
+                .where("user.email = :email", {
+                    email: userAccess,
+                })
+                .getOne();
+
+            if (!userFound) {
+                return res.status(404).send(`Invalid Request: No user found`);
+            }
+
+            compare(password, userFound.password, (err, data) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                if (data) {
+                    let autherizedUser = generateToken(userFound);
+                    return res.send({ accessToken: autherizedUser });
+                } else {
+                    return res.status(401).send(`Invalid Credentials`);
+                }
+            });
+        } else {
+            let userFound = await userRepo
+                .createQueryBuilder("user")
+                .addSelect("user.password")
+                .where("user.username = :username", {
+                    username: userAccess,
+                })
+                .getOne();
+
+            if (!userFound) {
+                return res.status(404).send(`Invalid Request: No user found`);
+            }
+
+            compare(password, userFound.password, (err, data) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                if (data) {
+                    let autherizedUser = generateToken(userFound);
+                    return res.send({ accessToken: autherizedUser });
+                } else {
+                    return res.status(401).send(`Invalid Credentials`);
+                }
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(`Server error: ${error}`);
+    }
 };
 
 export const getAllUser = async (req: Request, res: Response) => {
