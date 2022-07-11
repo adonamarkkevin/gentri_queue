@@ -91,10 +91,14 @@ export const updateQueue = async (req: Request, res: Response) => {
 
 export const getAllPendingQueue = async (req: Request, res: Response) => {
     const queueRepo = getRepository(Queue);
+    const { department } = req.query;
 
     try {
         let allPendingQueue = await queueRepo.find({
-            where: { status: "on queue" },
+            where: {
+                status: Not("done" || "cancelled"),
+                department: department,
+            },
             relations: ["visitor"],
         });
         return res.send(allPendingQueue);
@@ -136,6 +140,24 @@ export const clearQueue = async (req: Request, res: Response) => {
         await queueRepo.clear();
 
         return res.send(`Cleared Queue`);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(`Server error: ${error}`);
+    }
+};
+
+export const getQueuePerCounter = async (req: Request, res: Response) => {
+    const queueRepo = getRepository(Queue);
+    const { department } = req.query;
+    try {
+        let allQueue = await queueRepo.find({
+            where: {
+                status: "now serving",
+            },
+            relations: ["visitor"],
+        });
+
+        return res.send(allQueue);
     } catch (error) {
         console.error(error);
         return res.status(500).send(`Server error: ${error}`);
