@@ -95,6 +95,7 @@ export const getAllPendingQueue = async (req: Request, res: Response) => {
     try {
         let allPendingQueue = await queueRepo.find({
             where: { status: "on queue" },
+            relations: ["visitor"],
         });
         return res.send(allPendingQueue);
     } catch (error) {
@@ -118,6 +119,7 @@ export const getAllQueueByDepartment = async (req: Request, res: Response) => {
                 status: Not("done" || "cancelled"),
                 department: userFound.department,
             },
+            relations: ["visitor"],
         });
 
         return res.send(allQueue);

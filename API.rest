@@ -1,5 +1,5 @@
 @BASEURL = http://8.210.222.6:9000
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjU3NDU4MDEzfQ.XSjrxOHTQ5vRQwNns93n4yOC3BwRXg_GaraPFHwUDcE
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjU3NTE4NDMzfQ.dHJUqRR05ylc1VAaiH84VrxOl5fmoVVd19NBk6SYEoo
 
 ### Register User
 POST {{BASEURL}}/api/v1/user/register
@@ -7,11 +7,11 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "username": "TESTUSER",
-    "email": "testuser@email.com",
+    "username": "TESTUSERONE",
+    "email": "testyor@email.com",
     "password": "password123",
-    "firstName": "ANYA",
-    "middleName": "",
+    "firstName": "YOR",
+    "middleName": "BRIAR",
     "lastName": "FORGER",
     "birthdate": "07/09/2002",
     "address": "128 Park Avenue, West Berlint",
@@ -27,7 +27,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "userAccess": "testuser@email.com",
+    "userAccess": "testyor@email.com",
     "password": "password123"
 }
 
@@ -54,7 +54,6 @@ Accept: application/json
 
 {
     "email": "testuser@email.com",
-    "password": "password123",
     "firstName": "ANYA",
     "middleName": "",
     "contact_number": "09101234567",
