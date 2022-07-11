@@ -29,6 +29,9 @@ export class Queue extends BaseEntity {
     @Column()
     visit_purpose: string;
 
+    @Column({ nullable: true })
+    counter_number: string;
+
     @ManyToOne(() => Visit, (visit) => visit.queue, { cascade: true })
     @JoinColumn()
     visitor: Visit;
