@@ -100,6 +100,7 @@ export const getAllPendingQueue = async (req: Request, res: Response) => {
                 department: department,
             },
             relations: ["visitor"],
+            order: { queue_number: "DESC" },
         });
         return res.send(allPendingQueue);
     } catch (error) {
