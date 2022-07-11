@@ -89,3 +89,9 @@ GET {{BASEURL}}/api/v1/queue/get-all
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{TOKEN}}
+
+### Clear Queue
+DELETE {{BASEURL}}/api/v1/queue/clear
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{TOKEN}}
