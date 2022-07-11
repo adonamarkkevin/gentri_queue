@@ -155,8 +155,9 @@ export const getQueuePerCounter = async (req: Request, res: Response) => {
         let allQueue = await queueRepo.find({
             where: {
                 status: "now serving",
+                department: department,
             },
-            relations: ["visitor"],
+            select: ["counter_number", "queue_number"],
         });
 
         return res.send(allQueue);

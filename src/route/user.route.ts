@@ -1,3 +1,4 @@
+import { getQueuePerCounter } from "../controller/queue.controller";
 import {
     deleteUser,
     getAllUser,
@@ -33,6 +34,12 @@ export const userRoutes: {
         path: "/api/v1/user/get-current",
         method: "get",
         action: getCurrentUser,
+    },
+
+    {
+        path: "/api/v1/user/get-counter",
+        method: "get",
+        action: getQueuePerCounter,
     },
 
     {
