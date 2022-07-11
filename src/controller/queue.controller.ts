@@ -63,7 +63,7 @@ export const updateQueue = async (req: Request, res: Response) => {
     const userRepo = getRepository(User);
     const currentUser = req.user;
     const { queue_number } = req.params;
-    const { department, visit_purpose, status } = req.body;
+    const { department, visit_purpose, status, counter } = req.body;
 
     try {
         let userFound = await userRepo.findOne({
@@ -78,6 +78,7 @@ export const updateQueue = async (req: Request, res: Response) => {
         queueFound.department = department;
         queueFound.status = status;
         queueFound.visit_purpose = visit_purpose;
+        queueFound.counter_number = counter;
         queueFound.served_by = userFound.fullName;
 
         await queueRepo.save(queueFound);
