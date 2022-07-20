@@ -1,6 +1,7 @@
 import {
     BaseEntity,
     Column,
+    CreateDateColumn,
     Entity,
     JoinColumn,
     ManyToOne,
@@ -31,6 +32,9 @@ export class Queue extends BaseEntity {
 
     @Column({ nullable: true })
     counter_number: string;
+
+    @CreateDateColumn()
+    createAt: Date;
 
     @ManyToOne(() => Visit, (visit) => visit.queue, { cascade: true })
     @JoinColumn()

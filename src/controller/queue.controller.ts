@@ -166,3 +166,21 @@ export const getQueuePerCounter = async (req: Request, res: Response) => {
         return res.status(500).send(`Server error: ${error}`);
     }
 };
+
+export const getRecentQueuePerCounter = async (req: Request, res: Response) => {
+    const queueRepo = getRepository(Queue);
+    const { department } = req.query;
+    try {
+        let mostRecent = await queueRepo.find({
+            skip: 0,
+            take: 1,
+            order: { createAt: "DESC" },
+            where: { department: department },
+        });
+
+        return res.send(mostRecent);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(`Server error: ${error}`);
+    }
+};

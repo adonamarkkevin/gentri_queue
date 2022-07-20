@@ -3,6 +3,7 @@ import {
     createQueue,
     getAllPendingQueue,
     getAllQueueByDepartment,
+    getRecentQueuePerCounter,
     updateQueue,
 } from "../controller/queue.controller";
 
@@ -33,6 +34,12 @@ export const queueRoutes: {
         path: "/api/v1/queue/get-all",
         method: "get",
         action: getAllQueueByDepartment,
+    },
+
+    {
+        path: "/api/v1/queue/get-recent/",
+        method: "get",
+        action: getRecentQueuePerCounter,
     },
 
     {
