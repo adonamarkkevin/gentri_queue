@@ -7,7 +7,6 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "./User.entity";
 import { Visit } from "./Visit.entity";
 
 @Entity({ name: "TBL_QUEUE" })
