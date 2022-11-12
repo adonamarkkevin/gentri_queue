@@ -11,6 +11,7 @@ RUN npm install
 
 COPY . .
 COPY dev.env .env
+COPY dev.ormconfig.json ormconfig.json
 
 RUN npm run build
 
