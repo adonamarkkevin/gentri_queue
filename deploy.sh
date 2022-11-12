@@ -1,7 +1,7 @@
-docker stop queue_be
-docker rm queue_be
-docker rmi gentri_be
+docker stop gentri_be_queue_container
+docker rm gentri_be_queue_container
+docker rmi gentri_be_queue_img
 
-docker build -t gentri_be .
-docker run -d -p 9000:9000 --name queue_be gentri_be
+docker build -t gentri_be_queue_img .
+docker run -d -p 9000:9000 --name gentri_be_queue_img_queue_container gentri_be_queue_img
 docker image prune -f
